@@ -6,3 +6,44 @@ body{
   background-color: #fcfbfc;
   overflow-x: hidden;
 }
+
+
+@theme {
+  --color-primary-light: #64B5F6;
+  --color-primary: #0077CC;
+  --color-primary-dark: #003087;
+}
+.btn-primary {
+  @apply bg-primary-dark text-white font-medium rounded-lg shadow-md 
+         hover:bg-primary transition-all duration-200;
+}
+.btn-outline {
+  @apply border border-primary text-primary font-medium rounded-lg
+         hover:bg-primary hover:text-white transition-all duration-200;
+}
+
+.bg-primary-gradient {
+  @apply bg-gradient-to-r from-primary-dark via-primary to-primary-light;
+}
+
+.text-primary-gradient {
+  background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary), var(--color-primary-light));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Disable default password reveal icon (Chrome / Edge) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none !important;
+}
+
+input[type="password"]::-webkit-reveal,
+input[type="password"]::-webkit-clear-button {
+  display: none !important;
+}
+
+/* For most Chromium browsers */
+input[type="password"]::-webkit-password-reveal {
+  display: none !important;
+}

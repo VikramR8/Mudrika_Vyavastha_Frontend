@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosConfig = axios.create({
-    baseURL: "https://mudrika-vyavastha-backend.onrender.com/api/v1.0",
+    baseURL: BASE_URL,
     headers : {
         "Content-Type": "application/json",
         Accept:"application/json"
