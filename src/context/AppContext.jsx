@@ -7,7 +7,8 @@ export const AppContextProvider = ({children}) => {
     const [user, setUser] = useState(null)
 
     const contextValue = {
-        user
+        user,
+        setUser
     }
 
     return (
@@ -16,3 +17,5 @@ export const AppContextProvider = ({children}) => {
         </AppContext.Provider>
     )
 }
+
+export default AppContext;

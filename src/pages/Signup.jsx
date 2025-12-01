@@ -2,14 +2,61 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import Input from "../components/Input";
+import { validateEmail } from "../util/Validation";
+import axiosConfig from "../util/axiosConfig";
+import { API_ENDPOINTS } from "../util/apiEndPoints";
+import toast from "react-hot-toast";
+import { LoaderCircle } from "lucide-react";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const handleSumbit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    //Basic Validation
+    if (!fullName.trim()) {
+      setError("Please enter your full name");
+      setIsLoading(false);
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
+      setIsLoading(false);
+      return;
+    }
+    if (!password.trim()) {
+      setError("Please enter your password");
+      setIsLoading(false);
+      return;
+    }
+    setError("");
+
+    //Signup API call
+    try {
+      const response = await axiosConfig.post(API_ENDPOINTS.REGISTER, {
+        fullName,
+        email,
+        password,
+      });
+      if (response.status === 201) {
+        toast.success("Profile created successfully.");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Something went wrong", error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="h-screen w-full relative flex items-center justify-center overflow-hidden">
@@ -28,12 +75,12 @@ const Signup = () => {
           <p className="text-sm text-slate-700 text-center mb-8">
             Start tracking your spendings by joining us !
           </p>
-          <form className="space-y-4">
+          <form onSubmit={handleSumbit} className="space-y-4">
             <div className="flex justify-center mb-6">
               {/* Profile Image */}
             </div>
             <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-            {/* Name Input */}
+              {/* Name Input */}
               <Input
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -51,13 +98,13 @@ const Signup = () => {
               />
               {/* Password */}
               <div className="col-span-2">
-              <Input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                label="Password"
-                placeholder="********"
-                type="password"
-              />
+                <Input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  label="Password"
+                  placeholder="********"
+                  type="password"
+                />
               </div>
             </div>
             {error && (
@@ -67,16 +114,28 @@ const Signup = () => {
             )}
 
             <button
-              className="btn-primary w-full py-3 text-lg font-medium cursor-pointer"
+              disabled={isLoading}
+              className={`btn-primary w-full py-3 text-lg font-medium cursor-pointer flex items-center justify-center gap-2 ${isLoading? 'opacity-60 cursor-not-allowed':""}`}
               type="sumbit"
             >
-              SIGN UP
+              {isLoading ? (
+                <>
+                  <LoaderCircle className="animate-spin w-5 h-5" />
+                  Signing Up...
+                </>
+              ) : (
+                "SIGN UP"
+              )}
             </button>
             <p className="text-sm text-slate-800 text-center mt-6">
-              Already have an account?  
+              Already have an account?
               <Link
                 to="/login"
-                className="font-medium text-primary-dark underline hover:text-primary transition-colors"> Login</Link>
+                className="font-medium text-primary-dark underline hover:text-primary transition-colors"
+              >
+                {" "}
+                Login
+              </Link>
             </p>
           </form>
         </div>
