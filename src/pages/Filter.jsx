@@ -1,9 +1,12 @@
 import React from 'react'
+import Dashboard from '../components/Dashboard'
 
 const Filter = () => {
     return (
         <div>
-            Filter
+            <Dashboard activeMenu = "Filters">
+                This is filter page
+            </Dashboard>
         </div>
     )
 }

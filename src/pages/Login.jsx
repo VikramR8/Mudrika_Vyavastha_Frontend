@@ -42,6 +42,7 @@ const Login = () => {
       const { token, user } = response.data;
       if (token) {
         localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
         setUser(user);
         toast.success("Logged in successfully.");
         navigate("/dashboard");
