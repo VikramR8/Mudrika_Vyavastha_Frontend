@@ -1,0 +1,63 @@
+export const addThousandsSeparator = (num) => {
+  if (num === null || isNaN(num)) return "";
+
+
+  const numStr = num.toString();
+  const parts = numStr.split(".");
+
+  let integerPart = parts[0];
+  let fractionalPart = parts[1];
+
+  const lastThree = integerPart.substring(integerPart.length - 3);
+  const otherNumbers = integerPart.substring(0, integerPart.length - 3);
+
+  if (otherNumbers !== "") {
+    const formattedOtherNumbers = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+    integerPart = formattedOtherNumbers + "," + lastThree;
+  } else {
+    integerPart = lastThree; 
+  }
+  return fractionalPart ? `${integerPart}.${fractionalPart}` : integerPart;
+};
+
+
+export const prepareIncomeLineChartData = (transactions = []) => {
+  const dateMap = {};
+
+  transactions.forEach((txn) => {
+    if (!txn.date || !txn.amount) return;
+
+    const dateKey = new Date(txn.date).toISOString().split("T")[0];
+
+    if (!dateMap[dateKey]) {
+      dateMap[dateKey] = {
+        date: dateKey,
+        value: 0,          
+        categories: {},    
+        incomes: [],     
+      };
+    }
+
+    const amount = Number(txn.amount);
+    const category = txn.categoryName || "Other";
+    const name = txn.name || "Income";
+
+    dateMap[dateKey].value += amount;
+
+    dateMap[dateKey].categories[category] =
+      (dateMap[dateKey].categories[category] || 0) + amount;
+
+    dateMap[dateKey].incomes.push({
+      name,
+      category,
+      amount,
+    });
+  });
+
+  return Object.values(dateMap).sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  );
+};
+
+
+

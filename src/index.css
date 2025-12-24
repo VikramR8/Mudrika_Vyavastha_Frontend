@@ -15,9 +15,16 @@ body{
 }
 
 .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-100;
-  }
-  
+  @apply
+    bg-white
+    rounded-2xl
+    border border-slate-200
+    shadow-md
+    px-6 py-5          /* 👈 size bada feel yahin se aata hai */
+    transition-all duration-200;
+}
+
+
 .btn-primary {
   @apply bg-primary-dark text-white font-medium rounded-lg shadow-md 
          hover:bg-primary transition-all duration-200;
@@ -58,6 +65,24 @@ body{
   -webkit-background-clip: text;
   color: transparent;
 }
+
+.card-btn {
+  @apply 
+    flex items-center justify-center gap-2
+    w-full
+    px-5 py-2.5
+    rounded-xl
+    bg-white text-slate-700
+    border border-slate-200
+    font-medium
+    shadow-sm
+    transition-all duration-200 ease-in-out
+    hover:bg-slate-100 hover:text-primary hover:shadow-md
+    active:scale-95
+    disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+
 
 /* Disable default password reveal icon (Chrome / Edge) */
 input[type="password"]::-ms-reveal,

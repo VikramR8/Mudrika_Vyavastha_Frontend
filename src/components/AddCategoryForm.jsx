@@ -25,7 +25,6 @@ const AddCategoryForm = ({
       });
     }
 
-    // Reset only when switching to ADD mode
     if (!isEditing) {
       setCategory({
         name: "",
@@ -35,19 +34,12 @@ const AddCategoryForm = ({
     }
   }, [isEditing, initialCategoryData]);
 
-  /**
-   * INPUT CHANGE
-   */
   const handleChange = (key, value) => {
     setCategory((prev) => ({
       ...prev,
       [key]: value,
     }));
   };
-
-  /**
-   * SUBMIT HANDLER
-   */
   const handleSubmit = async () => {
     if (!category.name.trim()) return;
 
@@ -93,7 +85,7 @@ const AddCategoryForm = ({
           type="button"
           onClick={handleSubmit}
           disabled={loading}
-          className="add-btn-fill"
+          className="add-btn add-btn-fill"
         >
           {loading ? (
             <>

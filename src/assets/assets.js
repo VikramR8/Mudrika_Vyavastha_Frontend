@@ -25,13 +25,13 @@ export const SIDE_BAR_DATA =
         id: "03",
         label:"Income",
         icon:Wallet,
-        path:"/income",
+        path:"/incomes",
     },
     {
         id: "04",
         label:"Expense",
         icon:Coins,
-        path:"/expense",
+        path:"/expenses",
     },
     {
         id: "05",

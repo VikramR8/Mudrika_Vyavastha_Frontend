@@ -7,6 +7,12 @@ export const API_ENDPOINTS = {
     REGISTER: "/register",
     GET_ALL_CATEGORIES:"/categories",
     UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+    GET_ALL_INCOMES:"/incomes",
     ADD_CATEGORY:"/categories",
+    CATEGORY_BY_TYPE:(type)=> `/categories/${type}`,
+    ADD_INCOME:"/incomes",
+    DELETE_INCOME:(incomeid)=>`/incomes/${incomeid}`,
+    INCOME_EXCEL_DOWNLOAD:"/excel/download/income",
+    EMAIL_INCOME:"/email/income-excel",
     UPDATE_CATEGORY:(categoryId)=>`/categories/${categoryId}`
 }
